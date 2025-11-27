@@ -21,7 +21,7 @@ String[]right= {"A","B","C"};
 assertEquals(1, result.getMapping(1));
 assertEquals(2, result.getMapping (2));
 assertEquals(3, result.getMapping (3));
-
+//waiting for the algorithim to be ready
 }
 	
 @Test
@@ -36,8 +36,37 @@ public void testEmptyFiles() {
 	//Expected no Mapping, both files are empty
 	assertTrue(result.isempty());
 }
-//@Test
-//public void testSingleLineAdditionAtEnd()
+
+//Test what happens when a single line is added at the END of the new file.
+@Test
+public void testSingleLineAdditionAtEnd() {
+	String[]left= {
+			"A",
+			"B"
+	};
+	String[] right = {
+			"A",
+            "B",
+            "C" //New line added at the end
+};
+	
+	// TODO: replace with the call of actual LHDIFF when ready
+    // LHDiffResult result = LHDiff.compute(left, right);
+	
+	//Temp Result
+	//LHDiffResult result= new LHDiffResult();
+	result.addMapping(1,1);
+	result.addMapping(2,2);
+	
+	//Expected mapping
+	//assertEquals(3, result.getMapping (3));
+	assertEquals(1,result.getMapping(1));
+	assertEquals(2,result.getMapping(2));
+	
+	//new line added that should not map to any new line
+	assertTrue(result.isAddedLine(3));
+	
+}
 	
 	
 //@Test
