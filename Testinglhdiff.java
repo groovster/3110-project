@@ -127,11 +127,45 @@ assertTrue(result.isAddedLine(2));
 }
 
 
+	//====Single line Deletion=======//
 	
+@Test
+public void testSingleLineDeletionFromEnd() {
 	
-//@Test
-//public void testSingleLineDeletionFromEnd()
-	
+String[]left= {
+		"A",
+		"B",
+		"C",
+};
+String[] right = {
+		
+		"A",
+        "B",
+        
+};
+
+// TODO: replace with the call of actual LHDIFF when ready
+// LHDiffResult result = LHDiff.compute(left, right);
+
+
+//Expected mapping
+assertEquals(1, result.getMapping (1));
+
+assertEquals(2,result.getMapping(2));
+
+//Deleted line should not map to any new line
+assertTrue(result.isDeletedLine(3));
+
+
+// Expected mapping:
+// Old 1 → New 1
+// Old 2 → New 2
+// Old 3 → deleted
+
+}
+
+
+
 	
 //@Test
 //public void testSingleLineDeletionFromBeginning()
