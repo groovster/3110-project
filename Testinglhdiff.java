@@ -166,21 +166,129 @@ assertTrue(result.isDeletedLine(3));
 
 
 
+@Test
+public void testSingleLineDeletionFromBeginning() {
+	String[]left= {
+			"A",
+			"B",
+			"C",
+	};
+	String[] right = {
+			
+			
+	        "B",
+	        "C",
+	};
+
+	// TODO: replace with the call of actual LHDIFF when ready
+	// LHDiffResult result = LHDiff.compute(left, right);
+
+
+	//Expected mapping
+	//Deleted line should not map to any new line
+		assertTrue(result.isDeletedLine(1));
+	assertEquals(1, result.getMapping (2));
+    assertEquals(2,result.getMapping(3));
+
 	
-//@Test
-//public void testSingleLineDeletionFromBeginning()
+
+}
 	
 	
-//@Test
-//public void testSingleLineDeletionFromMiddle()
+@Test
+public void testSingleLineDeletionFromMiddle() {
+	String[]left= {
+			"A",
+			"B",
+			"C",
+	};
+	String[] right = {
+			"A",
+	        "C",
+	};
+
+	// TODO: replace with the call of actual LHDIFF when ready
+	// LHDiffResult result = LHDiff.compute(left, right);
+
+
+	//Expected mapping
+	//Deleted line should not map to any new line
+		assertTrue(result.isDeletedLine(2));
+	assertEquals(1, result.getMapping (1));
+    assertEquals(2,result.getMapping(3));
+
 	
 	
-//@Test
-//public void testSingleLineModification()
 	
 	
-//@Test
-//public void testMultipleAdditions()
+	
+}
+	
+	
+@Test
+public void testSingleLineModification() {
+	String[]left= {
+			"A",
+			"B",
+			"C",
+	};
+	String[] right = {
+			"A",
+			"BQ",
+			"C",
+	};
+
+	// TODO: replace with the call of actual LHDIFF when ready
+	// LHDiffResult result = LHDiff.compute(left, right);
+
+
+	//Expected mapping
+	//Deleted line should not map to any new line
+
+	assertEquals(1, result.getMapping (1));
+    assertEquals(2,result.getMapping(2));
+    assertEquals(3,result.getMapping(3));
+	
+	
+}
+	
+	
+	
+	
+	
+	
+	
+@Test
+public void testMultipleAdditions() {
+	String[]left= {
+			"A",
+			"B",
+			"C",
+	};
+	String[] right = {
+			"A",
+			"B",
+			"C",
+			"F",
+			"H",
+			"G",
+			
+	};
+
+	// TODO: replace with the call of actual LHDIFF when ready
+	// LHDiffResult result = LHDiff.compute(left, right);
+
+
+	//Expected mapping
+
+
+	assertEquals(1, result.getMapping (1));
+    assertEquals(2,result.getMapping(2));
+    assertEquals(3,result.getMapping(3));
+	assertTrue(result.isAddedLine(4));
+	assertTrue(result.isAddedLine(5));
+	assertTrue(result.isAddedLine(6));
+}
 	
 	
 //@Test
