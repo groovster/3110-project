@@ -291,8 +291,34 @@ public void testMultipleAdditions() {
 }
 	
 	
-//@Test
-//public void testMultipleDeletions()
+@Test
+public void testMultipleDeletions() {
+	
+
+    String[] left = {
+        "A",
+        "B",
+        "C",
+        "D"
+    };
+
+    String[] right = {
+        "A",
+        "D"
+    };
+	
+
+    // TODO: replace with the actual LHDIFF call when ready
+    // LHDiffResult result = LHDiff.compute(left, right);
+	
+	
+    assertEquals(1, result.getMapping(1));  // A stays at 1
+    assertTrue(result.isDeletedLine(2));    // B deleted
+    assertTrue(result.isDeletedLine(3));    // C deleted
+    assertEquals(2, result.getMapping(4));  // D moves up to new line 2
+
+	
+}
 	
 	
 }
