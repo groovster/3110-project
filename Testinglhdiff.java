@@ -97,9 +97,36 @@ public void testSingleLineAdditionAtBeginning() {
 	
 
 	
-	
-//@Test
-//public void testSingleLineAdditionInMiddle()
+@Test
+public void testSingleLineAdditionInMiddle() {
+
+String[]left= {
+		"A",
+		"B"
+};
+String[] right = {
+		
+		"A",
+		"Z",
+        "B",
+        
+};
+
+// TODO: replace with the call of actual LHDIFF when ready
+// LHDiffResult result = LHDiff.compute(left, right);
+
+
+//Expected mapping
+assertEquals(1, result.getMapping (1));
+
+assertEquals(3,result.getMapping(2));
+
+//new line added that should not map to any new line
+assertTrue(result.isAddedLine(2));
+
+}
+
+
 	
 	
 //@Test
