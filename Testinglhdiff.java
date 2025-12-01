@@ -252,6 +252,18 @@ public void testSingleLineModification() {
 	
 }
 	
+
+    String[] left = {
+        "A",
+        "B",
+        "C",
+        "D"
+    };
+
+    String[] right = {
+        "A",
+        "D"
+    };
 	
 	
 @Test
