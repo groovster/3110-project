@@ -1,14 +1,13 @@
 package lhdiftests;
-
 import java.io.*;
 import java.util.*;
 
-public class LineMapper {
+public class LineMapperNew {
 
     public static void main(String[] args) throws Exception {
 
         if (args.length != 1) {
-            System.out.println("Usage: java LineMapper4 <folder>");
+            System.out.println("Usage: java LineMapperNew <folder>");
             return;
         }
 
@@ -66,7 +65,7 @@ public class LineMapper {
         output.addAll(toXMLFormat(version2, 2));
         output.add("</TEST>");
 
-        // Output file
+        // Output file inside the same folder
         File out = new File(folderName, "mapping_output_" + folderName + ".txt");
         writeFile(out, output);
 
@@ -97,21 +96,63 @@ public class LineMapper {
         List<Integer> map;
     }
 
+    // ✅ OPTION A COMMENT REMOVAL
     public static CleanFile cleanFile(List<String> raw) {
         CleanFile cf = new CleanFile();
         cf.lines = new ArrayList<>();
         cf.map = new ArrayList<>();
 
+        boolean inBlockComment = false;
+
         for (int i = 0; i < raw.size(); i++) {
             String line = raw.get(i);
-            String t = line.trim();
+            String trimmed = line.trim();
 
-            if (t.isEmpty()) continue;
-            if (t.equals("{") || t.equals("}")) continue;
+            // --- Handle multi-line block comments ---
+            if (inBlockComment) {
+                if (trimmed.endsWith("*/")) {
+                    inBlockComment = false;
+                }
+                continue; // skip entire line
+            }
 
-            cf.lines.add(line);
+            // --- Detect start of block comment (full-line only) ---
+            if (trimmed.startsWith("/*")) {
+                // If it ends on same line AND has no code, skip it
+                if (trimmed.endsWith("*/")) {
+                    continue;
+                }
+                inBlockComment = true;
+                continue;
+            }
+
+            // --- Ignore full-line single-line comments ---
+            if (trimmed.startsWith("//")) continue;
+
+            // --- Ignore Javadoc middle lines ---
+            if (trimmed.startsWith("*")) continue;
+
+            // --- Remove inline comments but keep code ---
+            if (trimmed.contains("//")) {
+                trimmed = trimmed.substring(0, trimmed.indexOf("//")).trim();
+            }
+
+            // --- Remove inline block comments but keep code ---
+            if (trimmed.contains("/*") && trimmed.contains("*/")) {
+                trimmed = trimmed.replaceAll("/\\*.*?\\*/", "").trim();
+            }
+
+            // --- Skip empty after cleaning ---
+            if (trimmed.isEmpty()) continue;
+
+            // --- Skip brace-only lines ---
+            if (trimmed.equals("{") || trimmed.equals("}")) continue;
+
+            // --- Keep cleaned line ---
+            cf.lines.add(trimmed);
             cf.map.add(i + 1);
         }
+
         return cf;
     }
 
